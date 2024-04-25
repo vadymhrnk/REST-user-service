@@ -7,11 +7,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = AdultAgeValidator.class)
+@Constraint(validatedBy = AgeValidator.class)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AgeMatch {
-    String message() default "User age is not valid";
+    String message() default "- User must be at least %d years old";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
