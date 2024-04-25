@@ -1,6 +1,7 @@
 package com.example.restuserservice.dto.user;
 
 import com.example.restuserservice.validation.AgeMatch;
+import com.example.restuserservice.validation.DateBefore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +21,7 @@ public class UserRegistrationRequestDto {
     private String lastName;
 
     @NotNull
+    @DateBefore
     @AgeMatch
     private LocalDate birthDate;
 
