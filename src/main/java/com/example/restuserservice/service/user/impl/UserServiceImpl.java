@@ -9,6 +9,8 @@ import com.example.restuserservice.mapper.UserMapper;
 import com.example.restuserservice.models.User;
 import com.example.restuserservice.repository.user.UserRepository;
 import com.example.restuserservice.service.user.UserService;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,19 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(updatedUser);
         return userMapper.toDto(user);
+    }
+
+    @Override
+    public List<UserResponseDto> findUsersByBirthDateRange(LocalDate from, LocalDate to) {
+        if (from.isAfter(to)) {
+            throw new IllegalArgumentException(
+                    "[%s] date must be less than [%s] date".formatted(from, to)
+            );
+        }
+
+        List<User> users = userRepository.findByBirthDateBetween(from, to);
+
+        return userMapper.toDtoList(users);
     }
 
     @Override

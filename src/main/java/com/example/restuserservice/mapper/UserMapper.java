@@ -5,7 +5,9 @@ import com.example.restuserservice.dto.user.UserRequestDto;
 import com.example.restuserservice.dto.user.UserResponseDto;
 import com.example.restuserservice.dto.user.UserUpdateRequestDto;
 import com.example.restuserservice.models.User;
+import java.util.List;
 import org.mapstruct.BeanMapping;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
@@ -16,6 +18,9 @@ public interface UserMapper {
     UserResponseDto toDto(User book);
 
     User toModel(UserRequestDto requestDto);
+
+    @IterableMapping(elementTargetType = UserResponseDto.class)
+    List<UserResponseDto> toDtoList(List<User> userList);
 
     @BeanMapping(
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
