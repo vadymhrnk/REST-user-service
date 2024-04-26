@@ -2,6 +2,8 @@ package com.example.restuserservice.service.user.impl;
 
 import com.example.restuserservice.dto.user.UserRegistrationRequestDto;
 import com.example.restuserservice.dto.user.UserResponseDto;
+import com.example.restuserservice.dto.user.UserUpdateRequestDto;
+import com.example.restuserservice.exception.EntityNotFoundException;
 import com.example.restuserservice.exception.RegistrationException;
 import com.example.restuserservice.mapper.UserMapper;
 import com.example.restuserservice.models.User;
@@ -26,5 +28,21 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toModel(requestDto);
         return userMapper.toDto(userRepository.save(user));
+    }
+
+    @Override
+    public UserResponseDto partiallyUpdateUser(
+            Long userId,
+            UserUpdateRequestDto userUpdateRequestDto
+    ) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Can't find user by id: " + userId)
+                );
+
+        userMapper.updateUserFromDto(userUpdateRequestDto, user);
+
+        userRepository.save(user);
+        return userMapper.toDto(user);
     }
 }
