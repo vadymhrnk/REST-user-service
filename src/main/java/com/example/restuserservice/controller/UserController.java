@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +36,10 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    @Operation(summary = "Update an existing user", description = "Update an existing user")
+    @Operation(
+            summary = "Update an existing user",
+            description = "Allows users to partially update an existing user"
+    )
     public UserResponseDto partiallyUpdateUser(
             @PathVariable Long userId,
             @RequestBody @Valid UserUpdateRequestDto userUpdateRequestDto
@@ -53,5 +57,12 @@ public class UserController {
             @RequestBody @Valid UserRequestDto requestDto
     ) {
         return userService.updateFullUser(userId, requestDto);
+    }
+
+    @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete user by id", description = "Delete user by id")
+    public void delete(@PathVariable Long userId) {
+        userService.deleteById(userId);
     }
 }

@@ -10,4 +10,6 @@ public interface UserService {
     UserResponseDto partiallyUpdateUser(Long userId, UserUpdateRequestDto userUpdateRequestDto);
 
     UserResponseDto updateFullUser(Long userId, UserRequestDto requestDto);
+
+    void deleteById(Long userId);
 }
