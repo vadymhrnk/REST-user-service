@@ -1,7 +1,7 @@
 package com.example.restuserservice.mapper;
 
 import com.example.restuserservice.config.MapperConfig;
-import com.example.restuserservice.dto.user.UserRegistrationRequestDto;
+import com.example.restuserservice.dto.user.UserRequestDto;
 import com.example.restuserservice.dto.user.UserResponseDto;
 import com.example.restuserservice.dto.user.UserUpdateRequestDto;
 import com.example.restuserservice.models.User;
@@ -15,11 +15,13 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface UserMapper {
     UserResponseDto toDto(User book);
 
-    User toModel(UserRegistrationRequestDto responseDto);
+    User toModel(UserRequestDto requestDto);
 
     @BeanMapping(
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
     )
-    void updateUserFromDto(UserUpdateRequestDto dto, @MappingTarget User user);
+    User partiallyUpdateUser(UserUpdateRequestDto dto, @MappingTarget User user);
+
+    User fullyUpdateUser(UserRequestDto requestDto, @MappingTarget User user);
 }

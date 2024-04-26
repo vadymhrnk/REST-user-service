@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import lombok.Data;
 
 @Data
-public class UserRegistrationRequestDto {
+public class UserRequestDto {
     @Email
     @NotBlank
     private String email;
